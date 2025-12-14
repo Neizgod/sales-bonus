@@ -119,14 +119,15 @@ function analyzeSalesData(data, options) {
       .sort((a, b) => b.quantity - a.quantity)
       .slice(0, 10);
   });
+  console.log(sellerStats);
 
   return sellerStats.map((seller) => ({
-    seller_id: seller.id, // Строка, идентификатор продавца
-    name: `${seller.first_name} ${seller.last_name}`, // Строка, имя продавца
-    revenue: +seller.revenue.toFixed(2), // Число с двумя знаками после точки, выручка продавца
-    profit: +seller.profit.toFixed(2), // Число с двумя знаками после точки, прибыль продавца
-    sales_count: seller.sales_count, // Целое число, количество продаж продавца
-    top_products: seller.top_products, // Массив объектов вида: { "sku": "SKU_008","quantity": 10}, топ-10 товаров продавца
-    bonus: +seller.bonus.toFixed(2), // Число с двумя знаками после точки, бонус продавца
+    seller_id: seller.id,
+    name: `${seller.first_name} ${seller.last_name}`,
+    revenue: +seller.revenue.toFixed(2),
+    profit: +seller.profit.toFixed(2),
+    sales_count: seller.sales_count,
+    top_products: seller.top_products,
+    bonus: +seller.bonus.toFixed(2),
   }));
 }
