@@ -63,7 +63,7 @@ function analyzeSalesData(data, options) {
   // @TODO: Подготовка итоговой коллекции с нужными полями
 
   if (!data || data.sellers.length === 0 || !Array.isArray(data.sellers)) {
-    throw new Error("Некорректные входные данные");
+    throw new Error("Некорректные входные данные ");
   }
 
   const sellerStats = [];
