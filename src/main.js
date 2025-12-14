@@ -62,7 +62,7 @@ function analyzeSalesData(data, options) {
 
   // @TODO: Подготовка итоговой коллекции с нужными полями
 
-  if (!data || data.sellers.length === 0 || !Array.isArray(data.sellers)) {
+  if (!data || data.sellers.length === 0 || !Array.isArray(data.sellers) || !data.purchase_records)  {
     throw new Error("Некорректные входные данные ");
   }
 
@@ -119,7 +119,6 @@ function analyzeSalesData(data, options) {
       .sort((a, b) => b.quantity - a.quantity)
       .slice(0, 10);
   });
-  console.log(sellerStats);
 
   return sellerStats.map((seller) => ({
     seller_id: seller.id,
