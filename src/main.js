@@ -62,16 +62,16 @@ function analyzeSalesData(data, options) {
 
   // @TODO: Подготовка итоговой коллекции с нужными полями
 
-  if (!data || data.sellers.length === 0 || !Array.isArray(data.sellers) || !data.purchase_records || data.purchase_records == [])  {
+  if (!data || data.sellers.length === 0 || !Array.isArray(data.sellers) || !data.purchase_records || data.purchase_records.length === 0)  {
     throw new Error("Некорректные входные данные ");
   }
 
-  const sellerStats = [];
+  const sellerStats = data.sellers.slice(0);
 
   const { calculateRevenue, calculateBonus } = options;
 
   const sellerIndex = Object.fromEntries(
-    data.sellers.map((item) => [item.id, item])
+    sellerStats.map((item) => [item.id, item])
   );
   const productIndex = Object.fromEntries(
     data.products.map((item) => [item.sku, item])
@@ -105,8 +105,7 @@ function analyzeSalesData(data, options) {
       if (!seller.products_sold[item.sku]) {
         seller.products_sold[item.sku] = 0;
       }
-      seller.products_sold[item.sku] += 1;
-      if (!sellerStats.includes(seller)) sellerStats.push(seller);
+      seller.products_sold[item.sku] += item.quantity;
     });
   });
   sellerStats.sort((a, b) => b.profit - a.profit);
@@ -119,7 +118,7 @@ function analyzeSalesData(data, options) {
       .sort((a, b) => b.quantity - a.quantity)
       .slice(0, 10);
   });
-
+  
   return sellerStats.map((seller) => ({
     seller_id: seller.id,
     name: `${seller.first_name} ${seller.last_name}`,
