@@ -66,7 +66,13 @@ function analyzeSalesData(data, options) {
     throw new Error("Некорректные входные данные ");
   }
 
-  const sellerStats = data.sellers.slice(0);
+  const sellerStats = data.sellers.map(seller => ({
+    id: seller.id,
+    first_name: seller.first_name,
+    last_name: seller.last_name,
+    start_date: seller.start_date,
+    position: seller.position,
+  }));;
 
   const { calculateRevenue, calculateBonus } = options;
 
@@ -129,3 +135,4 @@ function analyzeSalesData(data, options) {
     bonus: +seller.bonus.toFixed(2),
   }));
 }
+
